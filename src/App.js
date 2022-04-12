@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Profile from './components/Profile.js';
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+ 
+  constructor(){
+    super();
+    this.state = {
+      show : true,
+      count:0,
+     
+      btnText : "show profile",
+     
+      color : "primary",      
+    };
+  }
+  
+
+  
+ 
+  btnClick(){
+    this.setState({show: !this.state.show})
+    if(this.state.btnText === "show profile"){
+      this.setState({
+        btnText : "hide profile",
+        color: "danger"})
+    }
+    if(this.state.btnText === "hide profile"){
+      this.setState({
+        btnText : "show profile",
+        color:"success"})
+    }
+  }
+  componentDidMount(){
+    setInterval(() => this.setState({count: this.state.count+1}),1000);
+  }
+  
+  render() {
+    return (
+      <div className='App'>       
+        {!this.state.show && <Profile />}
+        <h2> {this.state.count}</h2>
+        <button className=''
+              onClick={() => this.btnClick()}
+              variant={this.state.color}>
+          {this.state.btnText}
+        </button>
+      </div>
+    )
+  }
 }
 
 export default App;
